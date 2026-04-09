@@ -1,0 +1,26 @@
+Package: Base5x3
+Title: Displays Charts to Help Design and Analysis of Statistical t-tests
+Version: 0.0.0.9000
+Authors@R: 
+    person("Janet", "Aisbett", , "janet.aisbettt@meraglim.com", role = c("aut", "cre"))
+Description: Given an interval [L, U] of effect sizes that are not materially significant (equivalent to zero), the tool considers 5 tests: whether the effect size E is at least L, is less than L, is at most U, is more than U, or is between L and U. Tests can be performed at up to 3 alpha levels. For details see Aisbett et al., '5x3: A Practical Approach to Encouraging Thoughtful Statistical Analyses'. Parameters entered from a spreadsheet "charts.csv" include whether the chart is to be used in the statistical design or statistical analysis phase of a research project. Only t-tests are considered at this stage. 
+License: GPL (>=3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Depends: 
+    R (>= 3.5)
+LazyData: true
+URL: https://github.com/JA090/Base5x3
+BugReports: https://github.com/JA090/Base5x3/issues
+Imports: 
+Suggests:
+    bslib,
+    htmltools,
+    shiny,
+    shinyBS,
+    shinyMatrix,
+    shinyWidgets,
+    shinyjqui,
+    shinyjs
+
