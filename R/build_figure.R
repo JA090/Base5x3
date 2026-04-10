@@ -1,10 +1,9 @@
 #' Build PDF Figure for 5x3 Statistical Analysis Charts
+#'
 #' @description Function to compose figures such as those in Aisbett et al.,
 #'   "5x3: A Practical Approach to Encouraging Thoughtful Statistical Analysis"
 #' @param param List containing chart parameters (see Details)
 #' @param param2 Optional second parameter list for two-panel figures (default: NULL)
-#' @param legend If two-chart figure, use legend from first chart if 1, second chart if 2, or both if 3
-#' @param arrangement Layout option: T = vertical stack with legend on right,F = horizontal row (default: 2)
 #' @details
 #' The param and param2 lists should contain:
 #' \describe{
@@ -25,9 +24,11 @@
 #'   \item{labels} terminology for the 5 tests
 #'   \item{levels} terminology for the test levels (up to 3)
 #'   }
-#'
+#' @param legend If two-chart figure, use legend from first chart if 1, second chart if 2, or both if 3
+#' @param arrangement Layout option: T = vertical stack with legend on right,F = horizontal row (default: 2)
+#' @return nothing - called for its creation of a plot
 #' @export
-buildFigure <- function(param,
+build_figure <- function(param,
                         param2 = NULL,
                         legend = 2,
                         arrangement = F) {

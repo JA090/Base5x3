@@ -19,9 +19,7 @@
 #' @param colorvec Vector of colors for regions (color or B&W version)
 #' @param chartBW TRUE if black & white chart
 #' @param ltyBW Vector of line types for non-inferiority/non-superiority in B&W charts
-#'
-#' @export
-drawRegionsVT <- function(chartType,
+drawRegions <- function(chartType,
                           alphas,
                           power,
                           MML,

@@ -2,66 +2,86 @@
 title: "Base5x3"
 ---
 
-Given an interval of effect sizes that are not materially significant (equivalent to zero), the tool considers 5 statistical tests to be performed on trial data: whether the effect size is at least the lower interval bound, is less than that, is at most the upper interval bound, is more than that, or is in the interval. Tests can be performed at up to 3 alpha levels. The tool is designed to encourage more thoughtful statistical design prior to data collection as well as more nuanced reporting of findings. For details see Aisbett et al., *“5×3: A Practical Approach to Encouraging Thoughtful Statistical Analyses.”*
+Given an interval of effect sizes that are not materially significant (equivalent to zero), the tool considers 5 statistical tests to be performed on trial data: 
+whether the effect size is at least the lower interval bound, is less than that, is at most the upper interval bound, is more than that, or is in the interval. Tests can be performed at up to 3 alpha levels. 
+The tool is designed to encourage more thoughtful statistical design prior to data collection as well as more nuanced reporting of findings. For details see Aisbett et al., *“5×3: A Practical Approach to Encouraging Thoughtful Statistical Analyses.”*
 
 ## Installation
-Install from GitHub:
+To install this package, make sure you have R (>=4.1.0) and Rstudio installed. 
+Then install the "remotes" package if you don't have it (install.packages("remotes").
+Finally, install the 5x3 package from github:
+
 ```r
-# install.packages("remotes")  # if you don't already have it
 remotes::install_github("JA090/Base5x3")
 ```
-***
+
 ## Overview
 There are two main usage modes:  
 - **Interactive mode (Shiny app)** – use a browser‑based interface to set parameters and view results live.    
 - **Batch mode** – produce charts from parameters in an Excel spreadsheet for reproducible automated runs.  
 The interactive version can also be accessed online at  
-[https://meraglimja.shinyapps.io/5x3Tool](https://meraglimja.shinyapps.io/5x3Tool)
+[https://meraglimja.shinyapps.io/5x3Tool](https://meraglimja.shinyapps.io/5x3Tool).
 
+
+All modes use the same core functions.
 
 ## 1. Interactive Mode – Shiny App
 Use this mode when you want to explore parameter settings and see outputs immediately.
+
 ```r
 library(Base5x3)
 run_app()
 ```
 This launches an interactive Shiny dashboard in your browser that has tabs to support Design or Analysis phases.  
-Adjust parameters and explore charts. All calculations use the same core functions as the batch workflow.
+Adjust parameters and explore charts. 
 
+The paper Aisbett et al as well as a User Manual can be accessed through the Help button at the top left of the page. 
+The look of the charts (colors and terminology) can be changed by uploading .csv files as described in the Manual.
+Examples of color and terminology files respectively are:
 
+```r
+system.file("extdata", "colors2.csv", package="Base5x3")
+system.file("extdata", "clinical.csv", package="Base5x3")
+```
 ## 2. Batch Mode from Excel input
-Use this mode for reproducible or automated runs.
+Use this mode for reproducible or automated runs. For example, to re-create Fig 6 in Aisbett et al, 
+
+```r
+library(Base5x3)
+build_figure(Fig6)
+```
 
 ### Step 1 – Create or edit the Excel template
-An example template that produces the figures in Aisbett et al. is in:
-```
-inst/extdata/charts.xlsx
-```
-Do not edit the first column, which contains the parameter names used in the R code.  
-A parameter set is entered in column 2, then optionally other parameter sets in columns 3, 4 etc. 
+An example template that produces all the figures in Aisbett et al. is
 
+```system.file("extdata", "charts.csv",package="Base5x3")
+```
+
+Do not edit the first column, which contains the parameter names used in the R code.  
+A parameter set to create a chart is entered in column 2, then optionally other parameter sets in columns 3, 4 etc. 
 
 ### Step 2 – Save parameters from the Excel sheet into an `.rda` file 
 Run `read_params_Excel("inst/extdata/yourExcel", header=FALSE)`. This automatically creates a file `my_parameters.rda` where my_parameters is the first row entry in the Excel spreadsheet. 
 This file can be re‑loaded later using `load()` without needing to reopen Excel.
 
 ### Step 3 - Load previously saved parameters and run. 
+
 ```r
 load("my_parameters.rda")
 buildFigure(my_parameters)
 ```
 
 This will output a Design or Analysis chart (depending on parameters).
-More complex options to output two charts with one or two legends are available. For example, this code will produce a pdf with two charts sharing the legend from the second chart.
+More complex options to output two charts with one or two legends are available. 
+For stable results, rather than use plot panel save output as a pdf or jpg. For example, this code will produce a pdf with two charts sharing the legend from the second chart.
 ```r
-devtools::load_all()
 pdf("myChart.pdf", width = 13, height = 5)
-  buildFigure(param = my_parameters1, param2 = my_parameters2)
+  build_figure(param = my_parameters1, param2 = my_parameters2)
 dev.off()
 
 ```
 
-###  Expected parameters
+####  Expected parameters
  alpha: 6x3 matrix with first row containing alpha values, other rows "*" if want one-sided test at that level  
  power: 5x3 matrix of powers for sample size estimation, else 0  
  sample: Total sample size (provisional if computing). Invalid values default to 50  
@@ -79,7 +99,7 @@ dev.off()
  labels :  6-length vector of terminology for the 5 tests + no result  
  levels :  3-length vector of terminology for the strength of test levels (in order of increasing strength: later entries may be blank)  
 
-### Excel spreadsheet
+#### More about the Excel spreadsheet
 alpha is entered as a column of height 6, with each entry of the form c(x,x,x)   
 power is entered as a column of height 5  
 MML and MMU are entered in row labelled MM as c(MML,MMU)  
@@ -93,7 +113,7 @@ labels and levels are default terminology if row labelled terminology is blank, 
 |-----------|----------|
 | `run_app()` | Launch the interactive Shiny interface |
 | `read_params_excel()` | Read parameters from an Excel sheet |
-| `buildFigure()` | Create a chart or charts to (i) in Design phase, visualize sample sizes needed to deliver nominated power for various tests, given anticipated effect size and variance or (ii) visualize test results 
+| `build_figure()` | Create a chart or charts to (i) in Design phase, visualize sample sizes needed to deliver nominated power for various tests, given anticipated effect size and variance or (ii) visualize test results 
 
 
 # License

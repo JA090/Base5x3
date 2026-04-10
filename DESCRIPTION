@@ -14,7 +14,6 @@ LazyData: true
 URL: https://github.com/JA090/Base5x3
 BugReports: https://github.com/JA090/Base5x3/issues
 Imports: 
-Suggests:
     bslib,
     htmltools,
     shiny,

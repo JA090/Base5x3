@@ -120,7 +120,7 @@ buildPlot <- function(param) {
     # DRAW REJECTION REGIONS
     # -------------------------------------------------------------------------
 
-    drawRegionsVT(
+    drawRegions(
       chartType = chartType,
       alphas    = alphas,
       power     = powers,

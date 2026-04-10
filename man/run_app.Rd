@@ -2,10 +2,12 @@
 % Please edit documentation in R/run_app.R
 \name{run_app}
 \alias{run_app}
-\title{Run the Shiny app, launching the browser}
+\title{Run the Shiny app, launching the browser
+#initial commit -adding project fies}
 \usage{
 run_app()
 }
 \description{
 Run the Shiny app, launching the browser
+#initial commit -adding project fies
 }
