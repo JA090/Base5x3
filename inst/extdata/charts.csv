@@ -1,4 +1,4 @@
-﻿Name,Fig1a,Fig1b,Fig2a,Fig2b,Fig4a,Fig4b,Fig5a,Fig5b,Fig6,Fig7
+﻿Name,Fig1a,Fig1b,Fig2a,Fig2b,Fig5a,Fig5b,Fig6a,Fig6b,Fig7,Fig8
 chartType,Analysis,Analysis,Analysis,Analysis,Design,Design,Design,Design,Analysis,Analysis
 alpha,0.025,"c(0.025,0.0025)","c(0.025,0.0025)","c(0.025,0.0025)","c(0.025,0.0025)","c(0.025,0.0025)","c(0.025,0.007)","c(0.025,0.007)","c(0.1,0.05,0.005)","c(0.025,0.0035)"
 ,"""*""","c(""*"",""*"")","c(""*"",""*"")","c(""*"",""*"")","c(""*"",""*"")","c(""*"",""*"")","c(""*"",""*"")","c(""*"",""*"")","c(""*"",""*"",""*"")","c(""*"",""*"")"

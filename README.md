@@ -44,15 +44,15 @@ system.file("extdata", "colors2.csv", package="Base5x3")
 system.file("extdata", "clinical.csv", package="Base5x3")
 ```
 ## 2. Batch Mode from Excel input
-Use this mode for reproducible or automated runs. For example, to re-create Fig 6 in Aisbett et al, 
+Use this mode for reproducible or automated runs. For example, to re-create Fig 1a in Aisbett et al, 
 
 ```r
 library(Base5x3)
-build_figure(Fig6)
+build_figure(Fig1a)
 ```
 
 ### Step 1 – Create or edit the Excel template
-An example template that produces all the figures in Aisbett et al. is
+An example template that produces all the charts in the figures in Aisbett et al. is
 
 ```system.file("extdata", "charts.csv",package="Base5x3")
 ```
@@ -61,14 +61,14 @@ Do not edit the first column, which contains the parameter names used in the R�
 A parameter set to create a chart is entered in column 2, then optionally other parameter sets in columns 3, 4 etc. 
 
 ### Step 2 – Save parameters from the Excel sheet into an `.rda` file 
-Run `read_params_Excel("inst/extdata/yourExcel", header=FALSE)`. This automatically creates a file `my_parameters.rda` where my_parameters is the first row entry in the Excel spreadsheet. 
+Run `read_params_Excel("inst/extdata/yourExcel")`. This automatically creates a file `my_parameters.rda` where my_parameters is the first row entry in the Excel spreadsheet. 
 This file can be re‑loaded later using `load()` without needing to reopen Excel.
 
 ### Step 3 - Load previously saved parameters and run. 
 
 ```r
 load("my_parameters.rda")
-buildFigure(my_parameters)
+build_figure(my_parameters)
 ```
 
 This will output a Design or Analysis chart (depending on parameters).
@@ -88,7 +88,7 @@ dev.off()
  MML, MMU: Boundaries of minimum meaningful effect magnitudes  
  xmin, xmax: Range of effect sizes to display  
  zmin, zmax: Range of SEs or sample sizes to display  
- chartType: Design for sample size estimation phase, otherwise Analysis   
+ chartType: Design for sample size estimation stage, otherwise Analysis   
  Study: Fraction of sample in larger group (two-group study) or 1 (single-group)  
  chartBW: TRUE for black & white chart  
  colorvec: Vector of colors for regions and data points  
@@ -113,7 +113,7 @@ labels and levels are default terminology if row labelled terminology is blank, 
 |-----------|----------|
 | `run_app()` | Launch the interactive Shiny interface |
 | `read_params_excel()` | Read parameters from an Excel sheet |
-| `build_figure()` | Create a chart or charts to (i) in Design phase, visualize sample sizes needed to deliver nominated power for various tests, given anticipated effect size and variance or (ii) visualize test results 
+| `build_figure()` | Create a chart or charts to (i) at Design stage, visualize sample sizes needed to deliver nominated power for various tests, given anticipated effect size and variance or (ii) visualize test results 
 
 
 # License

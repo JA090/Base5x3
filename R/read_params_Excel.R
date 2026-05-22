@@ -1,7 +1,12 @@
-# =============================================================================
-#  Read from Excel spreadsheet "charts.csv" to create .rda parameter files for charts descibed in Aisbett et al.,
-#          "5x3: A Practical Approach to Encouraging Thoughtful Statistical Analysis"
-# =============================================================================
+#' read parameters from Excel
+#' @param filename name of .csv
+#' @export
+read_params_Excel <- function(filename) {
+  #
+  # =============================================================================
+  #  Read from Excel spreadsheet "charts.csv" to create .rda parameter files for charts descibed in Aisbett et al.,
+  #          "5x3: A Practical Approach to Encouraging Thoughtful Statistical Analysis"
+  # =============================================================================
 
 # -----------------------------------------------------------------------------
 # DEFAULT COLOR PALETTES
@@ -30,8 +35,8 @@ ltyBW <- c("solid", "longdash", "dashed", "dotted", "dotdash", "twodash")
 # -----------------------------------------------------------------------------
 # READ PARAMETER FILE
 # -----------------------------------------------------------------------------
-read_params_Excel <- function(filename) {
-Params <- read.csv(filename)
+
+Params <- read.csv(filename, header=FALSE)
 
 # -----------------------------------------------------------------------------
 # CREATE .RDA PARAMETER SET FOR EACH chart
@@ -40,7 +45,6 @@ for (fig in 2:length(Params[1,])) {
 
   # --- Figure identification ---
   myName   <-  Params[1, fig]
-
 
   # --- Chart parameters from spreadsheet ---
   chartType <- Params[2, fig]
