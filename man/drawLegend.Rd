@@ -30,7 +30,7 @@ The param list should contain:
 \item{xmax}{ditto}
 \item{zmin}{Range of SEs or sample sizes to display}
 \item{zmax}{ditto}
-\item{chartType}{"Design" for sample size estimation phase, otherwise analysis phase}
+\item{chartType}{"Design" for sample size estimation stage, otherwise analysis stage}
 \item{Study}{Fraction of sample in larger group (two-group study) or 1 (single-group)}
 \item{chartBW}{TRUE for black & white chart}
 \item{colorvec}{Vector of colors for regions and data points}

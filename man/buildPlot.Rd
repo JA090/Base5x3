@@ -11,8 +11,8 @@ buildPlot(param)
 }
 \description{
 Creates a complete chart displaying rejection regions for
-multi-level statistical tests. Handles both Design phase (sample size
-estimation) and Analysis phase visualizations.
+multi-level statistical tests. Handles both Design stage (sample size
+estimation) and Analysis stage visualizations.
 }
 \details{
 The param list should contain:
@@ -27,13 +27,13 @@ The param list should contain:
 \item{xmax}{ditto}
 \item{zmin}{Range of SEs or sample sizes to display}
 \item{zmax}{ditto}
-\item{chartType}{"Design" for sample size estimation phase, otherwise analysis phase}
+\item{chartType}{"Design" for sample size estimation stage, otherwise analysis stage}
 \item{Study}{Fraction of sample in larger group (two-group study) or 1 (single-group)}
 \item{chartBW}{TRUE for black & white chart}
 \item{colorvec}{Vector of colors for regions and data points}
 \item{ltyBW}{line type for B&W charts}
 \item{ES}{number of comma separated list of effect sizes}
-\item{dataV}{variance of data in Design phase, data SE or variance in Analysis phase}
+\item{dataV}{variance of data in Design stage, data SE or variance in Analysis stage}
 \item{VES}{TRUE if variance rather than SE in Analysis data}
 }
 }

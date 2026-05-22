@@ -225,7 +225,7 @@ drawRegions <- function(chartType,
     # --- Non-inferiority / Non-superiority boundary lines ---
     lineth <- 3
     col <- "black"
-print(c(MMU,MML))
+
     if (MMU > MML) for (k in 1:3) {
       # Non-superiority boundaries
       if (!is.na(alphas[3, k]) && xmax != nonsup[k, 1] && xmin < MMU) {

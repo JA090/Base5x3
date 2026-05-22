@@ -30,7 +30,7 @@ buildFigure(param = Fig4a,param2 = Fig4b, legend = 1)
 dev.off()
 
 
-# Figure 5: Two panels, horizontal layout with two legends
+# Figure 6: Two panels, horizontal layout with two legends
 pdf("Fig6.pdf", width = 7, height = 9)
   buildFigure(param = Fig5a, param2 = Fig5b, legend = 3)
 dev.off()

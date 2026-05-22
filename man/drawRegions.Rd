@@ -22,11 +22,11 @@ drawRegions(
 )
 }
 \arguments{
-\item{chartType}{"Design" for sample size estimation phase, otherwise analysis phase}
+\item{chartType}{"Design" for sample size estimation stage, otherwise analysis stage}
 
 \item{alphas}{5 x 3 matrix of alpha levels, with possible NA entries}
 
-\item{power}{5 x 3 matrix of power levels (zero unless in Design phase)}
+\item{power}{5 x 3 matrix of power levels (zero unless in Design stage)}
 
 \item{MML}{Lower boundary of minimum meaningful effect magnitude}
 
@@ -36,7 +36,7 @@ drawRegions(
 
 \item{xmax}{Maximum x-axis value to display (effect size)}
 
-\item{ymin}{Minimum y-axis value to display (in SE units, even in Design phase)}
+\item{ymin}{Minimum y-axis value to display (in SE units, even in Design stage)}
 
 \item{ymax}{Maximum y-axis value to display (in SE units)}
 
@@ -52,7 +52,7 @@ drawRegions(
 }
 \description{
 Depicts rejection regions for various t-tests on a chart.
-When computing sample size (Design phase), these regions must achieve
+When computing sample size (Design stage), these regions must achieve
 the desired power. The tests depend on how many test levels have been
 requested and whether there are effects equivalent to zero.
 }

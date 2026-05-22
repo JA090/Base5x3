@@ -2,9 +2,9 @@
 % Please edit documentation in R/clickPoints.R
 \name{clickPointsVT}
 \alias{clickPointsVT}
-\title{Function to allow users to get co-ordinates of a point on click, and in Analysis phase, to compute 95\% CI around that point.}
+\title{Function to allow users to get co-ordinates of a point on click, and in Analysis stage, to compute 95\% CI around that point.}
 \usage{
-clickPointsVT(xhit, yhit, bi, phase, Study)
+clickPointsVT(xhit, yhit, bi, stage, Study)
 }
 \arguments{
 \item{xhit}{Selected x co-ordinate.}
@@ -12,15 +12,15 @@ clickPointsVT(xhit, yhit, bi, phase, Study)
 \item{yhit}{Selected y co-ordinate.}
 
 \item{bi}{\itemize{
-\item sample size if analysis phase, else estimated variance .
+\item sample size if analysis stage, else estimated variance .
 }}
 
-\item{phase}{"Design" or "Analysis".}
+\item{stage}{"Design" or "Analysis".}
 
 \item{Study}{Type of study (one or two group).}
 }
 \value{
-rounded and possibly converted x-y co-ordinates, and CI boundaries if analysis phase
+rounded and possibly converted x-y co-ordinates, and CI boundaries if analysis stage
 }
 \description{
 The calculations for the chart use SE as y-co-ordinate. Translate this to sample size if on sample size tab..
