@@ -4,7 +4,7 @@
 #' The server code is divided into 8 tasks:
 #' 1. Prepare the slider that sets the interval [L,U]. Its range changes if the user changes the default ranges.
 #' 2. Manage the axis ranges. These can be explicitly changed by the user, or changed when zooming and unzooming.
-#' 3. Manage selection of tests (through a popup displaying a matrix) and of desired power in design phase.
+#' 3. Manage selection of tests (through a popup displaying a matrix) and of desired power in design stage.
 #' 4. Change terminology used in the legend and in display of matrices of tests and powers.
 #' 5. Change the chart color scheme.
 #' 6. Display user manual
@@ -20,8 +20,21 @@ server <- function(input, output, session) {
   #====================================================#
 
   # Render the slider
-  output$Slider <- renderUI({
-   sliderInput("LUX", "", min = slide1, max = slide2, value = sliderVal, step = .01, width = "100%")
+  output$Slider <- output$SliderA <- renderUI({
+   #sliderInput("LUX", "", min = slide1, max = slide2, value = sliderVal, step = .01, width = "100%")
+    noUiSliderInput(
+      inputId = "LUX",
+      label = "",
+      min=slide1,
+      max=slide2,
+      value = sliderVal,
+      #step = 0.01,
+      width = "400px",
+      tooltips = TRUE,
+      connect = TRUE,
+      color = "red",
+      format = wNumbFormat(decimals = 2)
+    )|> htmltools::tagAppendAttributes(style = "margin-left: 68px; margin-top: -20px;")
   })
 
   # Dynamically update slider range if axis ranges are changed.
@@ -30,12 +43,11 @@ server <- function(input, output, session) {
     if (length(input$xmin) >0 ) {
       slide1= min(input$xmin,input$LUX[1])
       slide2= max(input$xmax,input$LUX[2])
-      updateSliderInput(session,
+      updateNoUiSliderInput(session,
                         inputId="LUX",
-                        min = slide1,
-                        max = slide2,
-                        value=c(input$LUX[1],input$LUX[2]),
-                        step = max(1, (slide2-slide1) / 10) / 100)
+                        range = c(slide1,slide2),
+                        value=c(input$LUX[1],input$LUX[2]))
+                        #step = max(1, (slide2-slide1) / 10) / 100)
     }})
 
 
@@ -50,7 +62,7 @@ server <- function(input, output, session) {
           paste0(prefix[i], "E < ", input$LUX[1]),
           paste0(prefix[i], "E > ", input$LUX[1], " & E < ", input$LUX[2])
         )
-    if (!input$newTerminology) {
+    if (is.null(input$newTerminology)) {
       Labels <<- Labels0
       rownames(inputalps)[2:6] <<-rownames(inputpower) <<-
         Labels0[pos,1:5]
@@ -74,7 +86,7 @@ server <- function(input, output, session) {
                {    ranges$xmin <- input$xmin
                     ranges$xmax <- input$xmax
 
-                #if tab changes between Analysis and Design phases, the y axis units will also change
+                #if tab changes between Analysis and Design stages, the y axis units will also change
                  if (input$tab == "Analysis") {
                    ranges$ymin <- input$ymin
                    ranges$ymax <- input$ymax
@@ -86,7 +98,7 @@ server <- function(input, output, session) {
 
   #===== Change ranges if users zoom or reset
 
-  # Change for for analysis phase chart
+  # Change for for analysis stage chart
   observeEvent(input$dclick, {
     b <- input$brush
     if (!is.null(b)) {
@@ -98,7 +110,7 @@ server <- function(input, output, session) {
     }
   })
 
-  # change for design phase chart
+  # change for design stage chart
   observeEvent(input$dclickSS, {
     b <- input$brushSS
     if (!is.null(b)) {
@@ -115,12 +127,12 @@ server <- function(input, output, session) {
   })
 
   #========================================================#
-  #' 3.  Manage selection of tests (and power settings in design phase)
+  #' 3.  Manage selection of tests (and power settings in design stage)
   #========================================================#
 
   #=========If change tests selected, open a pop-up
 
-  observeEvent(input$Alpha,  if( input$Alpha) {
+  observeEvent(input$Alpha,  if( !is.null(input$Alpha)) {
     showModal(
       modalDialog(size = "l", value = FALSE,easyClose = TRUE,footer = NULL,
                   div( style = "font-size: 70%;",
@@ -150,7 +162,7 @@ server <- function(input, output, session) {
 
 
   #=== If change power selected, open a pop-up then put new values into power matrix
-  observeEvent(input$Power, if (input$Power) {
+  observeEvent(input$Power, if (!is.null(input$Power)) {
     showModal(modalDialog(
       size = "l",
       easyClose = TRUE,
@@ -189,7 +201,7 @@ server <- function(input, output, session) {
 
     #if switch for new terminology turns off, revert to formal terminology in test and power matrix
 
-    if (!input$newTerminology)
+    if (is.null(input$newTerminology))
     {  Labels <<- Labels0
     rownames(inputalps) <<- c("", Labels[pos, 1:5])
     rownames(inputpower) <<- rownames(inputalps)[2:6]
@@ -280,7 +292,7 @@ server <- function(input, output, session) {
             "Input must be .csv or .txt. The first row must contain colors for directional tests about the lower bound L at nominated alphas (in decreasing order).
                          The second row contains colors for the tests about the upper bound. The third row contains colours for rejection of both E > U and E < L.
                            The fourth row contains the colour for the region in which none of the nominated tests is rejected. The last row contains the color of plotted points
-                                  (analysis phase) or feasible sample sizes (sample size calculation)."
+                                  (analysis stage) or feasible sample sizes (sample size calculation)."
           ),
           fileInput("fileCol", "", accept = c("text/csv")),
           actionButton("submitCol", "Submit"),
@@ -320,11 +332,13 @@ server <- function(input, output, session) {
           selectInput(
             "manual_choice",
             "Choose a document:",
-            choices = list(
+            choices = c(
               "5x3 User Manual" = "manual.pdf",
               "Handbook on working with stakeholders" = "stakeholders.pdf",
               "Formal paper on 5x3" = "paper.pdf"
-            )
+            ),
+            selectize=FALSE,
+            size=3
           ),
           actionButton("open_manual", "Open document in new tab"),
         easyClose = TRUE,
@@ -419,27 +433,26 @@ server <- function(input, output, session) {
         output$FigSS <- renderPlot({
           buildPlot(param)
 
-        }, height = 500, width = 500) #end of design phase chart
+        }, height = 500, width = 500) #end of design stage chart
 
        else
        {
       #==========Analysis chart & CI render ==================#
 
         output$Fig <- renderPlot({
-          BP<-buildPlot(param)
-          print(BP)
+          buildPlot(param)
         }, height = 500, width = 500) # end of analysis chart
 
         # ==========chart of Confidence Intervals, which are optionally shown
 
         output$CIs <- renderPlot({
           if (length(input$dataMean) > 0 && length(input$LUX) > 0) {
-            CI <- drawCIs(param,
+             drawCIs(param,
               lab = "effect size",
               legendPos = "topleft"
             )
           }
-          print(CI)}, height = 300, width = 600)
+         }, height = 300, width = 600)
       }
     })
 
@@ -447,7 +460,7 @@ server <- function(input, output, session) {
   #' 8. Manage pop-ups giving point information from charts
   #====================================================#
 
-  #==== Pop-up info for analysis phase is the strongest decision at selected effect size and standard error, plus the 95% confidence interval
+  #==== Pop-up info for analysis stage is the strongest decision at selected effect size and standard error, plus the 95% confidence interval
   observeEvent(input$hover, {
     g <-
       as.character(
@@ -483,7 +496,7 @@ server <- function(input, output, session) {
     ))
   }, ignoreInit = TRUE)
 
-  # =====Pop-up info for design phase is the strongest test with required power at selected effect size and sample size ==========#
+  # =====Pop-up info for design stage is the strongest test with required power at selected effect size and sample size ==========#
 
   observeEvent(input$hoverSS, {
     g <-

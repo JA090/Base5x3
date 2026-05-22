@@ -56,7 +56,7 @@ for (fig in 2:length(Params[1,])) {
 
   # ---------------------------------------------------------------------------
   # SET UP LEGEND TERMINOLOGY
-  # Terminology varies between design phase (tests) and analysis phase (results)
+  # Terminology varies between design stage (tests) and analysis stage (results)
   # ---------------------------------------------------------------------------
 
   if (!(is.na(Params[21, fig]) | Params[21, fig] == "")) {
@@ -69,16 +69,16 @@ for (fig in 2:length(Params[1,])) {
 
 
     if (chartType == "Analysis") {
-      # Analysis phase: use terminology as-is
+      # Analysis stage: use terminology as-is
       labels <- c(paste0(Terms[1, ]), Terms[3, 1])
     } else {
-      # Design phase: rephrase in terms of tests rather than results
+      # Design stage: rephrase in terms of tests rather than results
       labels <- c(paste0("TESTING FOR ", Terms[1,]),"NO TEST HAS POWER")
     }
 
   } else {
     # --- No informal terminology: create formal test/strength terms from alpha levels ---
-    # Create level labels based on phase
+    # Create level labels based on stage
     if (chartType == "Design") {
       levels <- paste0("alpha =", firstA)
     }
@@ -86,7 +86,7 @@ for (fig in 2:length(Params[1,])) {
       levels <- paste0("p < ", firstA)
     }
 
-    # Default nomenclature prefixes for design/analysis phases
+    # Default nomenclature prefixes for design/analysis stages
     prefix <- c("TEST FOR ", "REJECT ")
     notest <- c("NO TEST WITH POWER", "NO TEST REJECTED")
     pos <- if (chartType == "Analysis") 2 else 1

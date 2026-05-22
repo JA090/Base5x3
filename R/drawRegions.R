@@ -1,18 +1,18 @@
 #' Draw Rejection Regions for Multi-Level T-Tests
 #'
 #' @description Depicts rejection regions for various t-tests on a chart.
-#'   When computing sample size (Design phase), these regions must achieve
+#'   When computing sample size (Design stage), these regions must achieve
 #'   the desired power. The tests depend on how many test levels have been
 #'   requested and whether there are effects equivalent to zero.
 #'
-#' @param chartType "Design" for sample size estimation phase, otherwise analysis phase
+#' @param chartType "Design" for sample size estimation stage, otherwise analysis stage
 #' @param alphas 5 x 3 matrix of alpha levels, with possible NA entries
-#' @param power 5 x 3 matrix of power levels (zero unless in Design phase)
+#' @param power 5 x 3 matrix of power levels (zero unless in Design stage)
 #' @param MML Lower boundary of minimum meaningful effect magnitude
 #' @param MMU Upper boundary of minimum meaningful effect magnitude
 #' @param xmin Minimum x-axis value to display (effect size)
 #' @param xmax Maximum x-axis value to display (effect size)
-#' @param ymin Minimum y-axis value to display (in SE units, even in Design phase)
+#' @param ymin Minimum y-axis value to display (in SE units, even in Design stage)
 #' @param ymax Maximum y-axis value to display (in SE units)
 #' @param ytick Vector of y-axis values at which tick marks are placed
 #' @param DOF Degrees of freedom for t-tests
@@ -225,8 +225,8 @@ drawRegions <- function(chartType,
     # --- Non-inferiority / Non-superiority boundary lines ---
     lineth <- 3
     col <- "black"
-
-    for (k in 1:3) {
+print(c(MMU,MML))
+    if (MMU > MML) for (k in 1:3) {
       # Non-superiority boundaries
       if (!is.na(alphas[3, k]) && xmax != nonsup[k, 1] && xmin < MMU) {
         if (!chartBW) {

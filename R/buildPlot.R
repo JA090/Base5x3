@@ -1,8 +1,8 @@
 #' Build Chart
 #'
 #' @description Creates a complete chart displaying rejection regions for
-#'   multi-level statistical tests. Handles both Design phase (sample size
-#'   estimation) and Analysis phase visualizations.
+#'   multi-level statistical tests. Handles both Design stage (sample size
+#'   estimation) and Analysis stage visualizations.
 #'
 #' @param param List containing all chart parameters (see details)
 #' @details
@@ -18,13 +18,13 @@
 #'   \item{xmax}{ditto}
 #'   \item{zmin}{Range of SEs or sample sizes to display}
 #'   \item{zmax}{ditto}
-#'   \item{chartType}{"Design" for sample size estimation phase, otherwise analysis phase}
+#'   \item{chartType}{"Design" for sample size estimation stage, otherwise analysis stage}
 #'   \item{Study}{Fraction of sample in larger group (two-group study) or 1 (single-group)}
 #'   \item{chartBW}{TRUE for black & white chart}
 #'   \item{colorvec}{Vector of colors for regions and data points}
 #'   \item{ltyBW}{line type for B&W charts}
 #'   \item{ES}{number of comma separated list of effect sizes}
-#'   \item{dataV}{variance of data in Design phase, data SE or variance in Analysis phase}
+#'   \item{dataV}{variance of data in Design stage, data SE or variance in Analysis stage}
 #'   \item{VES}{TRUE if variance rather than SE in Analysis data}
 #'   }
 #' @importFrom grDevices as.graphicsAnnot xy.coords
@@ -73,7 +73,7 @@ buildPlot <- function(param) {
     # -------------------------------------------------------------------------
 
     if (chartType == "Design") {
-      # Design phase: y-axis shows sample size
+      # Design stage: y-axis shows sample size
       # Convert zmin/zmax from sample size to SE scale
       # Reversed: ymin > ymax so axis runs top-to-bottom
       ymin <- r / sqrt(zmin)  # smaller SE at bottom (larger n)
@@ -86,7 +86,7 @@ buildPlot <- function(param) {
       ytick <- as.integer((r/ytick_pos)^2)
 
     } else {
-      # Analysis phase: y-axis shows SE directly
+      # Analysis stage: y-axis shows SE directly
       # Reversed: ymin > ymax so axis runs top-to-bottom
       ymin <- zmax  # Larger SE will be plotted at bottom
       ymax <- zmin  # Smaller SE at top

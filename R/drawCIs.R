@@ -16,12 +16,12 @@
 #'   \item{xmax}{ditto}
 #'   \item{zmin}{Range of SEs or sample sizes to display}
 #'   \item{zmax}{ditto}
-#'   \item{chartType}{"Design" for sample size estimation phase, otherwise analysis phase}
+#'   \item{chartType}{"Design" for sample size estimation stage, otherwise analysis stage}
 #'   \item{Study}{Fraction of sample in larger group (two-group study) or 1 (single-group)}
 #'   \item{chartBW}{TRUE for black & white chart}
 #'   \item{levels}{vector of names for strengths of tests}
 #'   \item{ES}{number of comma separated list of effect sizes}
-#'   \item{dataV}{variance of data in Design phase, data SE or variance in Analysis phase}
+#'   \item{dataV}{variance of data in Design stage, data SE or variance in Analysis stage}
 #'   \item{VES}{TRUE if variance rather than SE in Analysis data}
 #'   }
 #' @param lab Label for the effect size axis (default: "effect size")

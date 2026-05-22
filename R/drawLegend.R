@@ -18,7 +18,7 @@
 #'   \item{xmax}{ditto}
 #'   \item{zmin}{Range of SEs or sample sizes to display}
 #'   \item{zmax}{ditto}
-#'   \item{chartType}{"Design" for sample size estimation phase, otherwise analysis phase}
+#'   \item{chartType}{"Design" for sample size estimation stage, otherwise analysis stage}
 #'   \item{Study}{Fraction of sample in larger group (two-group study) or 1 (single-group)}
 #'   \item{chartBW}{TRUE for black & white chart}
 #'   \item{colorvec}{Vector of colors for regions and data points}
@@ -61,7 +61,7 @@ drawLegend <- function(param) {
   )
 
   #Only put in legend entries for regions that will be shown on the chart
-  #  depends also on phase
+  #  depends also on stage
   if (chartType=="Analysis")
       ymin=zmin
   else

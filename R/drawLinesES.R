@@ -1,4 +1,4 @@
-# Function to draw vertical lines at anticipated effect sizes in Design phase
+# Function to draw vertical lines at anticipated effect sizes in Design stage
 
 drawLines <- function(ES,xmin,xmax,ymin, ymax,col){
 if (!is.na(ES)) {

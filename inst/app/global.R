@@ -14,7 +14,7 @@ library(shinyBS)        # Bootstrap tooltips and popovers
 
 
 # -------- Source all custom R functions from the ./R directory ----------------
-r_files <- list.files(path = "R", pattern = "\\.R$", full.names = TRUE)
+r_files <- list.files(path = "../R", pattern = "\\.R$", full.names = TRUE)
 for (file in r_files) {
   source(file, encoding = "UTF-8")
 }
@@ -26,10 +26,10 @@ sliderVal <- c(MML, MMU)
 
 # -------- Formal terms for hypothesis test outcomes ---------------------------
 Labels <<- matrix(data = NA, nrow = 2, ncol = 6)
-Labels[1, 6] <- "NO TEST WITH POWER"  # Term in design phase
-Labels[2, 6] <- "NO TEST REJECTED"    # Term for analysis phase
+Labels[1, 6] <- "NO TEST WITH POWER"  # Term in design stage
+Labels[2, 6] <- "NO TEST REJECTED"    # Term for analysis stage
 
-# Default nomenclature prefixes for design/analysis phases
+# Default nomenclature prefixes for design/analysis stages
 prefix <<- c("TEST FOR ", "REJECT ")
 notest <<- c("NO TEST WITH POWER", "NO TEST REJECTED")
 
@@ -50,8 +50,8 @@ Labels0 <- Labels  # Use to return to default terminology
 # Note: If test levels are changed, these terms will be modified
 firstA <- c(.025, .0025, "")
 Levels <<- matrix(data = NA, nrow = 2, ncol = 3)
-Levels[1, ] <- paste0("α = ", firstA)  # Design phase
-Levels[2, ] <- paste0("p < ", firstA)  # Analysis phase
+Levels[1, ] <- paste0("α = ", firstA)  # Design stage
+Levels[2, ] <- paste0("p < ", firstA)  # Analysis stage
 
 # -------- Color palette & plotting styles -------------------------------------
 # Rejection regions of the tests, region where no test selected, and data points
@@ -79,11 +79,11 @@ inputBW <<- FALSE
 xmin0 <<- -1.5
 xmax0 <<- 1.5
 
-# Y-axis represents standard error in the analysis phase
+# Y-axis represents standard error in the analysis stage
 ymin0 <<- 0
 ymax0 <<- 0.6
 
-# Y-axis represents total sample size in the design phase
+# Y-axis represents total sample size in the design stage
 ymin0SS <<- 16
 ymax0SS <<- 1000
 
@@ -109,7 +109,7 @@ alpha <- matrix(D, 6, 3, byrow = TRUE, dimnames = list(c("", Labels[1:5])))
 # Power matrix in % : 5 tests x 3 alpha levels
 inputpower <<- matrix(rep(80, 15), 5, 3, dimnames = list(Labels[1, 1:5], firstA))
 
-# -------- Initial data (Analysis phase) / Estimated data (Design phase) ------------------------
+# -------- Initial data (Analysis stage) / Estimated data (Design stage) ------------------------
 anteSS <- 200
 anteES <- ".6, 1.4"
 anteVar <- 1
