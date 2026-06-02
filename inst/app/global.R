@@ -26,12 +26,12 @@ sliderVal <- c(MML, MMU)
 
 # -------- Formal terms for hypothesis test outcomes ---------------------------
 Labels <<- matrix(data = NA, nrow = 2, ncol = 6)
-Labels[1, 6] <- "NO TEST WITH POWER"  # Term in design stage
-Labels[2, 6] <- "NO TEST REJECTED"    # Term for analysis stage
+Labels[1, 6] <- "NO TEST WITH REQUIRED POWER"  # Term in design stage
+Labels[2, 6] <- "NO HYPOTHESIS REJECTED"    # Term for analysis stage
 
 # Default nomenclature prefixes for design/analysis stages
 prefix <<- c("TEST FOR ", "REJECT ")
-notest <<- c("NO TEST WITH POWER", "NO TEST REJECTED")
+notest <<- c("NO TEST WITH REQUIRED POWER", "NO HYPOTHESIS REJECTED")
 
 # Build formal labels using material significance margins
 for (pos in 1:2) {
@@ -101,7 +101,6 @@ D <- c(
   "", "*", "",
   "", "*", ""
 )
-
 # Define dimensions and labels for test matrices
 inputalps <<- matrix(D, 6, 3, byrow = TRUE, dimnames = list(c("", Labels[1, 1:5])))
 alpha <- matrix(D, 6, 3, byrow = TRUE, dimnames = list(c("", Labels[1:5])))
@@ -113,9 +112,11 @@ inputpower <<- matrix(rep(80, 15), 5, 3, dimnames = list(Labels[1, 1:5], firstA)
 anteSS <- 200
 anteES <- ".6, 1.4"
 anteVar <- 1
+
 dataMean <- "-0.5, 0.6, 1.2"
 dataV <- "0.134, 0.19, 0.5"
 VES <- FALSE
+samp <- 40
 
 # ----------Start with Analysis tab active
 firstTab <- "Analysis"

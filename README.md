@@ -2,9 +2,9 @@
 title: "Base5x3"
 ---
 
-Given an interval of effect sizes that are not materially significant (equivalent to zero), the tool considers 5 statistical tests to be performed on trial data: 
-whether the effect size is at least the lower interval bound, is less than that, is at most the upper interval bound, is more than that, or is in the interval. Tests can be performed at up to 3 alpha levels. 
-The tool is designed to encourage more thoughtful statistical design prior to data collection as well as more nuanced reporting of findings. For details see Aisbett et al., *“5×3: A Practical Approach to Encouraging Thoughtful Statistical Analyses.”*
+Given an interval of effect sizes [MML, MMU] that are not materially significant (i.e., equivalent to zero), the tool considers 5 statistical t-tests to be performed on trial data: viz., 
+testing for an effect size at least the lower bound MML, no greater than the upper bound MMU, less than MMU, more than MML, or is in the interval [MML, MMU]. Tests can be performed at up to 3 alpha levels. 
+The tool has Design and Analysis tabs, and is designed to encourage more thoughtful statistical design prior to data collection as well as more nuanced reporting of findings. For details see Aisbett et al., *“5×3: A Practical Approach to Encouraging Thoughtful Statistical Analyses.”*
 
 ## Installation
 To install this package, make sure you have R (>=4.1.0) and Rstudio installed. 
@@ -35,13 +35,12 @@ run_app()
 This launches an interactive Shiny dashboard in your browser that has tabs to support Design or Analysis phases.  
 Adjust parameters and explore charts. 
 
-The paper Aisbett et al as well as a User Manual can be accessed through the Help button at the top left of the page. 
+The paper Aisbett et al., as well as a User Manual, can be accessed through the Supporting Documents button near the top left of the page. 
 The look of the charts (colors and terminology) can be changed by uploading .csv files as described in the Manual.
-Examples of color and terminology files respectively are:
+Examples of color and terminology files respectively are downloaded with the Base5x3 package and can be found in the folder:
 
 ```r
-system.file("extdata", "colors2.csv", package="Base5x3")
-system.file("extdata", "clinical.csv", package="Base5x3")
+system.file("extdata", package="Base5x3")
 ```
 ## 2. Batch Mode from Excel input
 Use this mode for reproducible or automated runs. For example, to re-create Fig 1a in Aisbett et al, 
@@ -54,24 +53,25 @@ build_figure(Fig1a)
 ### Step 1 – Create or edit the Excel template
 An example template that produces all the charts in the figures in Aisbett et al. is
 
-```system.file("extdata", "charts.csv",package="Base5x3")
+```r
+system.file("extdata", "charts.csv",package="Base5x3")
 ```
 
 Do not edit the first column, which contains the parameter names used in the R code.  
-A parameter set to create a chart is entered in column 2, then optionally other parameter sets in columns 3, 4 etc. 
+A set of parameters to create a chart is entered in column 2, then optionally other set is entered in columns 3, 4 etc. 
 
 ### Step 2 – Save parameters from the Excel sheet into an `.rda` file 
-Run `read_params_Excel("inst/extdata/yourExcel")`. This automatically creates a file `my_parameters.rda` where my_parameters is the first row entry in the Excel spreadsheet. 
+Run `read_params_Excel("yourExcel", "inst/extdata/"")`. This automatically creates a file `data/my_name.rda` where my_name is the first row entry in the Excel spreadsheet. 
 This file can be re‑loaded later using `load()` without needing to reopen Excel.
 
 ### Step 3 - Load previously saved parameters and run. 
 
 ```r
-load("my_parameters.rda")
-build_figure(my_parameters)
+load("data/my_name.rda")
+build_figure(my_name)
 ```
-
 This will output a Design or Analysis chart (depending on parameters).
+
 More complex options to output two charts with one or two legends are available. 
 For stable results, rather than use plot panel save output as a pdf or jpg. For example, this code will produce a pdf with two charts sharing the legend from the second chart.
 ```r
@@ -80,32 +80,31 @@ pdf("myChart.pdf", width = 13, height = 5)
 dev.off()
 
 ```
-
 ####  Expected parameters
- alpha: 6x3 matrix with first row containing alpha values, other rows "*" if want one-sided test at that level  
- power: 5x3 matrix of powers for sample size estimation, else 0  
- sample: Total sample size (provisional if computing). Invalid values default to 50  
- MML, MMU: Boundaries of minimum meaningful effect magnitudes  
- xmin, xmax: Range of effect sizes to display  
- zmin, zmax: Range of SEs or sample sizes to display  
- chartType: Design for sample size estimation stage, otherwise Analysis   
- Study: Fraction of sample in larger group (two-group study) or 1 (single-group)  
- chartBW: TRUE for black & white chart  
- colorvec: Vector of colors for regions and data points  
- ltyBW : line type for B&W charts  
- ES :  effect size (possibly comma separated list)  
- dataV : variance of data (or possible SE in Analysis phase)  
- VES :  TRUE if SE rather than variance  
- labels :  6-length vector of terminology for the 5 tests + no result  
+ chartType: Design for sample size estimation stage, otherwise Analysis.  
+ alpha: 6x3 matrix with row names automatically provided as a blank followed by names for the 5 test hypotheses. The first row contains up to three test alpha values, and other rows contain "*" if that hypothesis is to be tested at that level  
+ power:  5x3 numerical matrix of % powers required for each of the tests. Only used with Design tab active. 
+ sample: Total sample size (provisional estimate if chartType = Design).   
+ MML, MMU: Boundaries of materially significant values.
+ xmin, xmax: Range of displayed effect sizes.  
+ zmin, zmax: Range of displayed standard errors (chartType = Analysis) else total sample sizes.  
+ Study: Fraction of sample in larger group (two-group study) or 1 (single-group).  
+ chartBW: TRUE for black & white chart.  
+ colorvec: 11-length vector of colors for regions and data points, with the first 3 colours for tests of the hypothesis that the effect size is at least MML, the next 3 for tests it is at most MMU, then 3 for tests that it is in [MML, MMU]. The next colour is to denote no hypothesis is rejected ( or no test has suffieient power in Design stage), and the last color is for data points or lines.  
+ ltyBW : 6-length vector of line types for B&W charts, with the first 3 types for tests of the hypothesis that the effect size is less than MMU and the other for the hypothesis it is greater than MML.
+ ES :  effect size or anticipated effect size (possibly comma separated list)  
+ dataV : variance of data (in Analysis stage, may be a comma separated list of the same length as ES, and may be standard errors rather than variances)  
+ VES :  FALSE if trial summary data arestandard errors, not variances. 
+ labels :  6-length vector of terminology for rejection of each of the 5 test hypotheses + term for when none rejected  
  levels :  3-length vector of terminology for the strength of test levels (in order of increasing strength: later entries may be blank)  
 
 #### More about the Excel spreadsheet
-alpha is entered as a column of height 6, with each entry of the form c(x,x,x)   
-power is entered as a column of height 5  
-MML and MMU are entered in row labelled MM as c(MML,MMU)  
-ranges are entered in row labelled limits as c(xmin,xmax,zmin,zmax)  
-colorvec will be thr default if the row labelled color is blank. Otherwise enter .csv filename containing color palette (see User Manual)  
-labels and levels are default terminology if row labelled terminology is blank, otherwise enter .csv filename  
+alpha is entered as a column of height 6, with each entry of the form c(x, x, x).   
+power is entered as a column of height 5.  
+MML and MMU are entered in row labelled MM as c(MML, MMU).  
+ranges are entered in a row labelled limits as c(xmin, xmax, zmin, zmax).  
+colorvec will be the default if the row labelled color is blank. Otherwise enter .csv filename containing color palette (see User Manual).  
+labels and levels are default terminology if row labelled terminology is blank, otherwise enter .csv filename.  
 
 ## Main functions 
 
@@ -113,7 +112,7 @@ labels and levels are default terminology if row labelled terminology is blank, 
 |-----------|----------|
 | `run_app()` | Launch the interactive Shiny interface |
 | `read_params_excel()` | Read parameters from an Excel sheet |
-| `build_figure()` | Create a chart or charts to (i) at Design stage, visualize sample sizes needed to deliver nominated power for various tests, given anticipated effect size and variance or (ii) visualize test results 
+| `build_figure()` | Create a chart or charts to (i) at Design stage, visualize sample sizes needed to deliver nominated power for various tests, given anticipated effect size and variance or (ii) visualize study summary data 
 
 
 # License

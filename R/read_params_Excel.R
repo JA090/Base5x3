@@ -1,7 +1,8 @@
-#' read parameters from Excel
+#' read parameters from Excel to create .rda file
 #' @param filename name of .csv
+#' @param path relative path from directory to .csv files (e.g. /inst/extdata/)
 #' @export
-read_params_Excel <- function(filename) {
+read_params_Excel <- function(filename,path) {
   #
   # =============================================================================
   #  Read from Excel spreadsheet "charts.csv" to create .rda parameter files for charts descibed in Aisbett et al.,
@@ -36,7 +37,7 @@ ltyBW <- c("solid", "longdash", "dashed", "dotted", "dotdash", "twodash")
 # READ PARAMETER FILE
 # -----------------------------------------------------------------------------
 
-Params <- read.csv(filename, header=FALSE)
+Params <- read.csv(paste0(getwd(), path, filename), header=FALSE)
 
 # -----------------------------------------------------------------------------
 # CREATE .RDA PARAMETER SET FOR EACH chart
@@ -66,7 +67,7 @@ for (fig in 2:length(Params[1,])) {
   if (!(is.na(Params[21, fig]) | Params[21, fig] == "")) {
     # --- Read informal terminology from external file ---
     Terms  <- read.csv(
-      paste0(getwd(), "/", parse(text = Params[21, fig])),
+      paste0(getwd(), path, parse(text = Params[21, fig])),
       header = FALSE
     )
     levels <- as.vector(Terms[2, ][Terms[2, ] != ""])
@@ -92,7 +93,7 @@ for (fig in 2:length(Params[1,])) {
 
     # Default nomenclature prefixes for design/analysis stages
     prefix <- c("TEST FOR ", "REJECT ")
-    notest <- c("NO TEST WITH POWER", "NO TEST REJECTED")
+    notest <- c("NO TEST WITH REQUIRED POWER", "NO HYPOTHESIS REJECTED")
     pos <- if (chartType == "Analysis") 2 else 1
     # Build formal labels using material significance margins
     labels <- c(
@@ -165,7 +166,7 @@ for (fig in 2:length(Params[1,])) {
   } else {
     # Read custom colors from external file
     Col <- read.csv(
-      paste0(getwd(), "/", parse(text = Params[20, fig])),
+      paste0(getwd(), path, parse(text = Params[20, fig])),
       header = FALSE
     )
     colorvec <- c(

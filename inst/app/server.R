@@ -248,7 +248,7 @@ server <- function(input, output, session) {
       # change row names in the test and power matrices
       dd <- t(dd)
       Labels[2,1:6] <<- c(dd[,1],dd[1,3])
-      Labels[1,1:5] <<- paste0("TESTING FOR ", Labels[2,])
+      Labels[1,1:5] <<- paste0("TESTING FOR ", Labels[2,1:5])
       Labels[1,6]<<- "NO TEST HAS ENOUGH POWER"
       rownames(inputalps)<<- c("", Labels[pos,1:5])
       rownames(inputpower) <<- rownames(inputalps)[2:6]
@@ -382,6 +382,10 @@ server <- function(input, output, session) {
       file_data(),
       input$file,
       input$tab,
+      input$var,
+      input$ES,
+      input$sample,
+      input$dataV,
       input$submitCol,
       ranges$xmin,ranges$ymin,
       ranges$xmax,ranges$ymax
@@ -447,12 +451,12 @@ server <- function(input, output, session) {
 
         output$CIs <- renderPlot({
           if (length(input$dataMean) > 0 && length(input$LUX) > 0) {
-             drawCIs(param,
+            drawCIs(param,
               lab = "effect size",
               legendPos = "topleft"
             )
           }
-         }, height = 300, width = 600)
+          }, height = 300, width = 600)
       }
     })
 

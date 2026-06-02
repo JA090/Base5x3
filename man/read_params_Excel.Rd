@@ -2,13 +2,15 @@
 % Please edit documentation in R/read_params_Excel.R
 \name{read_params_Excel}
 \alias{read_params_Excel}
-\title{read parameters from Excel}
+\title{read parameters from Excel to create .rda file}
 \usage{
-read_params_Excel(filename)
+read_params_Excel(filename, path)
 }
 \arguments{
 \item{filename}{name of .csv}
+
+\item{path}{relative path from directory to .csv files (e.g. /inst/extdata/)}
 }
 \description{
-read parameters from Excel
+read parameters from Excel to create .rda file
 }
