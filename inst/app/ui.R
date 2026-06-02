@@ -118,7 +118,7 @@ ui <- page_fluid(
         "Enter study description here.",
           numericInput("Study", h6("Number of groups."), 0.5, 0.5, 1, 0.1),
          helpText("(If performing t-tests on 2 groups, enter proportion in larger group. If a number greater than 1 is entered, F-tests will be applied assuming equal groups.)"),
-         
+         br(),
         # Sample size planning inputs (conditional)
                             conditionalPanel("input.tab == 'Design'",
                                              textInput("ES", "Anticipated effect size(s)", anteES),
@@ -134,7 +134,7 @@ ui <- page_fluid(
                                                textAreaInput("dataV", "SE or variance(s)", dataV, width = 350, height = 70,rows =1),
                                                checkboxInput("VES", "Check if entering variance", VES)
                                              ),
-                                             numericInput("sample", "Total sample size", anteSS, 4, step = 10)
+                                             numericInput("sample", "Total sample size", samp, 4, step = 10)
                             )
           )
       ),

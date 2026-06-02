@@ -4,10 +4,12 @@
 \alias{read_params_Excel}
 \title{read parameters from Excel}
 \usage{
-read_params_Excel(filename)
+read_params_Excel(filename, path)
 }
 \arguments{
 \item{filename}{name of .csv}
+
+\item{path}{relative path from directory to .csv files (e.g. /inst/extdata/)}
 }
 \description{
 read parameters from Excel
