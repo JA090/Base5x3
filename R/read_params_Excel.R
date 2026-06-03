@@ -1,12 +1,11 @@
 #' read parameters from Excel to create .rda file
 #' @param filename name of .csv
-#' @param path relative path from directory to .csv files (e.g. /inst/extdata/)
 #' @export
-read_params_Excel <- function(filename,path) {
+read_params_Excel <- function(filename) {
   #
   # =============================================================================
   #  Read from Excel spreadsheet "charts.csv" to create .rda parameter files for charts descibed in Aisbett et al.,
-  #          "5x3: A Practical Approach to Encouraging Thoughtful Statistical Analysis"
+  #          "5x3: A Practical Approach to Encouraging Thoughtful Statistical Analysis".
   # =============================================================================
 
 # -----------------------------------------------------------------------------
@@ -37,7 +36,7 @@ ltyBW <- c("solid", "longdash", "dashed", "dotted", "dotdash", "twodash")
 # READ PARAMETER FILE
 # -----------------------------------------------------------------------------
 
-Params <- read.csv(paste0(getwd(), path, filename), header=FALSE)
+Params <- read.csv(system.file("extdata", filename,package="Base5x3"), header=FALSE)
 
 # -----------------------------------------------------------------------------
 # CREATE .RDA PARAMETER SET FOR EACH chart
@@ -66,10 +65,8 @@ for (fig in 2:length(Params[1,])) {
 
   if (!(is.na(Params[21, fig]) | Params[21, fig] == "")) {
     # --- Read informal terminology from external file ---
-    Terms  <- read.csv(
-      paste0(getwd(), path, parse(text = Params[21, fig])),
-      header = FALSE
-    )
+    Terms  <- read.csv(system.file("extdata", parse(text = Params[21, fig]),package="Base5x3"),
+      header = FALSE)
     levels <- as.vector(Terms[2, ][Terms[2, ] != ""])
 
 
@@ -165,10 +162,8 @@ for (fig in 2:length(Params[1,])) {
     colorvec <- if (chartBW) colorvecBW else colorvec0
   } else {
     # Read custom colors from external file
-    Col <- read.csv(
-      paste0(getwd(), path, parse(text = Params[20, fig])),
-      header = FALSE
-    )
+    Col <- read.csv(system.file("extdata", parse(text = Params[20, fig]),package="Base5x3"),
+                    header = FALSE)
     colorvec <- c(
       t(Col[1, 1:3]),
       t(Col[2, 1:3]),
@@ -209,6 +204,6 @@ for (fig in 2:length(Params[1,])) {
   assign(myName, myData)
   save(
     list = myName,
-    file = paste0(getwd(), "/data/", myName, ".rda")
+    file = paste0("data/", myName, ".rda")
   )
 }}
