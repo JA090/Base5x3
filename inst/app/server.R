@@ -64,6 +64,7 @@ server <- function(input, output, session) {
         )
     if (is.null(input$newTerminology)) {
       Labels <<- Labels0
+      print(Labels)
       rownames(inputalps)[2:6] <<-rownames(inputpower) <<-
         Labels0[pos,1:5]
 
@@ -215,7 +216,7 @@ server <- function(input, output, session) {
     }
     else
       # if switch is on, a pop-up allows user to enter name of file containing new terminology
-    {
+    {print("here")
       showModal(
         modalDialog(
           size = "l",
@@ -250,6 +251,7 @@ server <- function(input, output, session) {
       Labels[2,1:6] <<- c(dd[,1],dd[1,3])
       Labels[1,1:5] <<- paste0("TESTING FOR ", Labels[2,1:5])
       Labels[1,6]<<- "NO TEST HAS ENOUGH POWER"
+      print(Labels)
       rownames(inputalps)<<- c("", Labels[pos,1:5])
       rownames(inputpower) <<- rownames(inputalps)[2:6]
       #new terms for strength of tests/P-values
